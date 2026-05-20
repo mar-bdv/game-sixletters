@@ -1,0 +1,199 @@
+body {
+    color: #302E2F;
+}
+
+.overlay {
+        position: fixed;
+        top: 60px; /* под хедером */
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #F2F6F7;
+
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+
+        margin-top: 40px;
+        z-index: 900;
+}
+
+
+.modal {
+    width: 100%;
+    max-width: 600px;
+    height: calc(100% - 40px);
+
+    background: #F2F6F7;
+    border-radius: 16px;
+
+    padding: 10px;
+    overflow-y: auto;
+    position: relative;
+}
+
+.modal_hr {
+
+
+    border: 1px solid #302e2f22;
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border: none;
+    background: transparent;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.modal_header {
+    display: flex;
+    justify-content: center;
+    letter-spacing: 10%;
+}
+
+.header {
+    font-size: 30px;
+    font-weight: 500;
+    margin-top: 0px;
+    margin-bottom: 10px;
+}
+
+.modal_info_top:first-child {
+    margin-top: 5px;
+}
+
+.modal_info {
+    font-size: 17px;
+}
+
+.modal_letter {
+    display: flex;
+    align-items: center;
+}
+
+.modal_letter_text {
+    margin-left: 10px;
+}
+
+.letter_char {
+    width: 66px;
+    height: 66px;
+    border: 3px solid #302e2f27;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 50px;
+    font-weight: 700;
+    text-transform: uppercase;
+    user-select: none;
+    color: #FFFFFE;
+    margin: 10px;
+}
+
+.letter_correct{
+    background-color: #6aaa64;
+    border: 1px solid #6aaa64;
+}
+
+.letter_present{
+    background-color: #c9b458;
+    border: 1px solid #c9b458;
+}
+
+.letter_absent{
+    background-color: #787C7F;
+    border: 1px solid #787C7F;
+}
+
+.modal_letter_info {
+    font-size: 17px;
+}
+
+.modal_questions_header {
+    font-size: 25px;
+}
+
+
+.question_first {
+    margin-bottom: 3px;
+}
+
+.question_answer {
+    margin-top: 3px;
+}
+
+.modal_bottom p {
+    display: flex;
+    justify-content: center;
+    font-size: 24px;
+    margin-bottom: 0px;
+}
+
+// стили статистики
+
+.stats_container {
+    font-weight: 600;
+}
+
+.stats_row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.stats_oneblock {
+    width: 216px;
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 0px;
+}
+
+.stats_oneblock_number {
+    font-size: 30px;
+    margin-bottom: 5px;
+}
+
+.stats_oneblock_descr {
+    margin-top: 3px;
+    text-align: center;
+}
+
+.stats_reset_block {
+    display: flex;
+    justify-content: center;
+}
+
+.stats_reset {
+    border: 1px solid #606060;
+    color: #606060;
+    background-color: transparent;
+    font-size: 20px;
+    padding: 10px 30px;
+    border-radius: 10px;
+    margin-top: 60px;
+    cursor: pointer;
+}
+
+.settings {
+    margin-top: 20px;
+}
+
+.settings_block {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 10px;
+}
+
+.settings_block_descr {
+    display: flex;
+    flex-direction: column;
+}
+
+.settings_descr {
+    margin-top: 2px;
+    color: #585858;
+}

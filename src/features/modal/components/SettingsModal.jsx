@@ -1,0 +1,93 @@
+
+import { useDispatch } from "react-redux";
+import styles from "./modals.module.scss";
+import { closeModal } from "../slices/modalSlice";
+
+export default function SettingsModal() {
+    const dispatch = useDispatch();
+
+    return (
+        <div className={styles.overlay}>
+            <div className={styles.modal}>
+                <button
+                    className={styles.close}
+                    onClick={() => dispatch(closeModal())}
+                >
+                    ✕
+                </button>
+
+                <div className={styles.modal_header}>
+                    <h2 className={styles.header}>Настройки</h2>
+                </div>
+
+                <div className={styles.settings}>
+                    <div className={styles.settings_block}>
+                        <p className={styles.settings_name}>Темная тема</p>
+
+                        <img width="44" height="44" src="https://img.icons8.com/ios/50/toggle-off.png" alt="toggle-off"/>
+
+                        {/* <img width="44" height="44" src="https://img.icons8.com/ios-filled/50/toggle-on.png" alt="toggle-on"/> */}
+                    </div>
+
+                    <hr/>
+
+                    <div className={styles.settings_block}>
+                        <p className={styles.settings_name}>Анимация конфетти в случае победы</p>
+
+                        <img width="44" height="44" src="https://img.icons8.com/ios/50/toggle-off.png" alt="toggle-off"/>
+
+                        {/* <img width="44" height="44" src="https://img.icons8.com/ios-filled/50/toggle-on.png" alt="toggle-on"/> */}
+                    </div>
+
+                    <hr/>
+
+                    <div className={styles.settings_block}>
+                        <p className={styles.settings_name}>Поменять местами кнопки “Ввод” и “Удалить”</p>
+
+                        <img width="44" height="44" src="https://img.icons8.com/ios/50/toggle-off.png" alt="toggle-off"/>
+
+                        {/* <img width="44" height="44" src="https://img.icons8.com/ios-filled/50/toggle-on.png" alt="toggle-on"/> */}
+                    </div>
+
+                    <hr/>
+
+                    <div className={styles.settings_block}>
+                        <div className={styles.settings_block_descr}>
+                            <p className={styles.settings_name}>Сложный мод</p>
+
+                            <ul className={styles.settings_descr}>
+                                <li className={styles.settings_descr_one}>Игрок обязан учитывать все найденные буквы.</li>
+                                <li className={styles.settings_descr_one}>На игру дается 2 минуты.</li>
+                                <li className={styles.settings_descr_one}>Отключена возможность посмотреть подсказку.</li>
+                            </ul>
+
+                        </div>
+
+                        <img width="44" height="44" src="https://img.icons8.com/ios/50/toggle-off.png" alt="toggle-off"/>
+
+                        {/* <img width="44" height="44" src="https://img.icons8.com/ios-filled/50/toggle-on.png" alt="toggle-on"/> */}
+                    </div>
+
+                    <hr/>
+
+                    <div className={styles.settings_block}>
+                        <div className={styles.settings_block_descr}>
+                            <p className={styles.settings_name}>Подсказки с количеством букв</p>
+
+                            <ul className={styles.settings_descr}>
+                                <li className={styles.settings_descr_one}>Если буква встречается чаще 1 раза в слове, высветится подсказка.</li>
+                            </ul>
+                        </div>
+
+                        <img width="44" height="44" src="https://img.icons8.com/ios/50/toggle-off.png" alt="toggle-off"/>
+
+                        {/* <img width="44" height="44" src="https://img.icons8.com/ios-filled/50/toggle-on.png" alt="toggle-on"/> */}
+                    </div>
+                    <hr/>
+                </div>
+
+
+            </div>
+        </div>
+    );
+}

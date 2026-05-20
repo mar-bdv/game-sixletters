@@ -1,0 +1,46 @@
+import { Outlet } from "react-router-dom";
+import Header from "../../widgets/Header/Header";
+import Footer from "../../widgets/Footer/Footer";
+import styles from "./main.module.scss"
+import { useSelector } from "react-redux";
+import RulesModal from "../../features/modal/components/RulesModal";
+import { useEffect } from "react";
+import StatsModal from "../../features/modal/components/StatsModal";
+import SettingsModal from "../../features/modal/components/SettingsModal";
+
+export default function MainLayout() {
+    const activeModal = useSelector(
+        (state) => state.modal.activeModal
+    );
+
+    useEffect(() => {
+        document.body.style.overflow =
+            activeModal ? "hidden" : "auto";
+
+        return () => {
+            document.body.style.overflow = "auto";
+        };
+    }, [activeModal]);
+
+
+    return (
+        <>
+            <div className={styles.mainLayout}>
+                
+                <Header />
+                <hr className={styles.mainLayout_hr}></hr>
+                
+            </div>
+
+            <main>
+                <Outlet />
+            </main>
+
+            <Footer />
+
+            {activeModal === "rules" && <RulesModal />}
+            {activeModal === "stats" && <StatsModal />}
+            {activeModal === "settings" && <SettingsModal />}
+        </>
+    );
+}

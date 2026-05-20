@@ -1,0 +1,23 @@
+// .mainLayout {
+//     display: flex;
+//     max-width: 794px;
+//     flex-direction: column;
+//     width: 100%;
+//     margin: 0 auto;
+// }
+
+.mainLayout {
+    display: flex;
+    max-width: 794px;
+    flex-direction: column;
+    width: 100%;
+    margin: 0 auto;
+    align-items: center;
+
+}
+
+.mainLayout_hr {
+    width: 675px;
+
+    border: 1px solid #302e2f22;
+}

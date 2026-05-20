@@ -1,0 +1,41 @@
+body {
+    font-family: "Open Sans", sans-serif;
+    background-color: #F2F6F7;
+}
+
+.header_heading {
+    letter-spacing: 10%;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #302E2F;
+    font-size: 40px;
+    margin-top: 10px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 675px;
+    width: 100%;
+}
+
+.header_icon {
+    width: 27px;
+}
+
+.header_btn {
+    background-color: transparent;
+    border: 0px;
+    cursor: pointer;
+    padding: 0;
+}
+
+.header_icon:first-child {
+    margin-left: 10px;
+}
+
+.header_icon:last-child {
+    margin-left: 13px;
+    margin-right: 10px;
+}
