@@ -2,9 +2,31 @@ import { configureStore } from "@reduxjs/toolkit";
 import gameReducer from "../features/game/gameSlice";
 import modalReducer from "../features/modal/slices/modalSlice";
 
+
+const loadGame = () => {
+    try {
+        const data = localStorage.getItem("wordle-game");
+
+        return data ? JSON.parse(data) : undefined;
+    } catch {
+        return undefined;
+    }
+};
+
 export const store = configureStore({
     reducer: {
         game: gameReducer,
         modal: modalReducer,
     },
+
+    preloadedState: {
+        game: loadGame(),
+    },
+});
+
+store.subscribe(() => {
+    localStorage.setItem(
+        "wordle-game",
+        JSON.stringify(store.getState().game)
+    );
 });

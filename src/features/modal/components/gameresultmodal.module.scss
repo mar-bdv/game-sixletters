@@ -1,0 +1,104 @@
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+
+    background: rgba(0, 0, 0, 0.5);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 9999;
+}
+
+.modal {
+    background: white;
+    padding: 24px;
+    border-radius: 12px;
+}
+
+
+.result_heading {
+    margin: 5px 20px;
+    font-size: 30px;
+    color: #302E2F;
+}
+
+.result_secretword_block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.result_secretword {
+    color: #5C5C5C;
+    font-size: 20px;
+    margin-bottom: 3px;
+    margin-top: 8px;
+}
+
+.result_secretword_word {
+    color: #68AC61;
+    font-size: 25px;
+    margin-top: 2px;
+}
+
+.result_playagain_block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.result_playagain_btn {
+    background-color: #68AC61;
+    color: #F2F6F7;
+    border: none;
+    font-size: 35px;
+    width: 300px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.result_congrats {
+    font-size: 30px;
+    margin-bottom: 2px;
+}
+
+.result_heading_congrats {
+    font-size: 30px;
+    color: #68AC61;
+    margin-top: 2px;
+}
+
+.result_heading_block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    letter-spacing: 10%;
+}
+
+.result_info {
+    display: flex;
+    justify-content: space-around;
+    width: 460px;
+    margin-bottom: 15px;
+}
+
+.result_info_block {
+    font-size: 20px;
+    color: #5C5C5C;
+}
+
+.result_info_one {
+    margin: 10px;
+    color: #302E2F;
+}
+
+.result_info_result {
+    margin: 10px;
+}

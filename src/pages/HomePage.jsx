@@ -93,11 +93,12 @@ import { useSelector, useDispatch } from "react-redux";
 
 import Board from "../features/game/components/Board";
 
-import { addLetter, removeLetter, submitGuess } from "../features/game/gameSlice";
+import { addLetter, initWords, removeLetter, submitGuess } from "../features/game/gameSlice";
 import KeyBoard from "../features/keyboard/Keyboard";
 
 import styles from "./homepage.module.scss";
 import { useEffect, useRef } from "react";
+import { openResultModal } from "../features/modal/slices/modalSlice";
 
 const KEY_MAP = {
     Backquote: "Ё",
@@ -153,7 +154,30 @@ function HomePage() {
         pageRef.current?.focus();
     }, []);
 
+    useEffect(() => {
+        dispatch(initWords());
+    }, [dispatch]);
 
+    const gameStatus = useSelector(
+        (state) => state.game.gameStatus
+    );
+
+    console.log("gameStatus:", gameStatus);
+
+    useEffect(() => {
+        console.log("effect", gameStatus);
+        if (gameStatus === "win") {
+            dispatch(openResultModal("win"));
+        }
+
+        if (gameStatus === "lose") {
+            dispatch(openResultModal("lose"));
+        }
+    }, [gameStatus, dispatch]);
+
+
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     const handleKeyPress = (key) => {
         console.log("handleKeyPress called with:", key); // ← дебаг
         

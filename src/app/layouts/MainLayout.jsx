@@ -7,11 +7,15 @@ import RulesModal from "../../features/modal/components/RulesModal";
 import { useEffect } from "react";
 import StatsModal from "../../features/modal/components/StatsModal";
 import SettingsModal from "../../features/modal/components/SettingsModal";
+import GameResultModal from "../../features/modal/components/GameResultModal";
 
 export default function MainLayout() {
     const activeModal = useSelector(
         (state) => state.modal.activeModal
     );
+
+
+    console.log("activeModal", activeModal);
 
     useEffect(() => {
         document.body.style.overflow =
@@ -21,6 +25,8 @@ export default function MainLayout() {
             document.body.style.overflow = "auto";
         };
     }, [activeModal]);
+
+    
 
 
     return (
@@ -41,6 +47,7 @@ export default function MainLayout() {
             {activeModal === "rules" && <RulesModal />}
             {activeModal === "stats" && <StatsModal />}
             {activeModal === "settings" && <SettingsModal />}
+            {activeModal === "result" && <GameResultModal />}
         </>
     );
 }
