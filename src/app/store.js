@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import gameReducer from "../features/game/gameSlice";
 import modalReducer from "../features/modal/slices/modalSlice";
-
+import notificationReducer from "../features/modal/slices/notificationSlice";
 
 const loadGame = () => {
     try {
@@ -17,6 +17,7 @@ export const store = configureStore({
     reducer: {
         game: gameReducer,
         modal: modalReducer,
+        notification: notificationReducer,
     },
 
     preloadedState: {

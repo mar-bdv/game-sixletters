@@ -11,18 +11,6 @@ const createBoard = () =>
         }))
     );
 
-// const initialState = {
-//     board: createBoard(),
-//     currentRow: 0,
-//     currentCol: 0,
-
-//     secretWord: "МАКИЯЖ", // пока хардкод
-//     gameStatus: "playing", // playing | win | lose
-//     usedLetters: {}, // для клавиатуры
-
-//     animationRow: null,
-
-// };
 
 const initialState = {
     board: createBoard(),
@@ -33,6 +21,9 @@ const initialState = {
     secretWord: "",
     gameStatus: "playing",
     usedLetters: {},
+    error: null,
+    startedAt: Date.now(),
+    finishedTime: null,
 
     animationRow: null,
 };
@@ -74,16 +65,6 @@ const gameSlice = createSlice({
         },
 
         submitGuess(state) {
-            // const row = state.board[state.currentRow];
-            // const guess = row.map((c) => c.letter).join("");
-            
-            // // if (state.currentCol < 6) return;
-
-        
-            // if (state.gameStatus !== "playing") return;
-
-
-            // const secret = state.secretWord;
             
             if (state.currentCol < 6) return;
             if (state.gameStatus !== "playing") return;
@@ -98,12 +79,12 @@ const gameSlice = createSlice({
 
             const secretUsed = Array(6).fill(false);
 
-            // if (!state.words.includes(guess)) {
-            //     return; // или показать ошибку
-            // }
+
 
             if (!state.words.includes(guess)) {
-                setTimeout(() => alert("такого слова нет в словаре"), 50);
+                state.error =
+                    "В словаре игры нет такого слова! Попробуйте другое, например «МАКИЯЖ»";
+
                 return;
             }
 
@@ -141,37 +122,14 @@ const gameSlice = createSlice({
                 }
             });
 
-            // const isWin = guess === secret;
-
-            // if (isWin) {
-            //     state.gameStatus = "win";
-            //     return;
-            // }
-
-            // if (state.currentRow === 4) {
-            //     state.gameStatus = "lose";
-            //     return;
-            // }
-
-            
-            // // if (state.currentRow === 4) {
-            // //     state.gameStatus = "lose";
-            // //     const secret = state.secretWord;
-            // //     setTimeout(() => alert(`вы проиграли, загаданное слово было: ${secret}`), 50);
-            // //     return;
-            // // }
-
-            
-            
-            // state.animationRow = state.currentRow;
-
-            // state.currentRow += 1;
-            // state.currentCol = 0;
 
             const isWin = guess === secret;
 
             if (isWin) {
                 state.gameStatus = "win";
+
+                state.finishedTime = Math.floor((Date.now() - state.startedAt) / 1000);
+
                 return;
             }
 
@@ -186,6 +144,11 @@ const gameSlice = createSlice({
             state.currentCol = 0;
         
         },
+
+        clearError(state) {
+            state.error = null;
+        },
+
         restartGame(state) {
             state.board = createBoard();
             state.currentRow = 0;
@@ -194,6 +157,9 @@ const gameSlice = createSlice({
             state.usedLetters = {};
             state.animationRow = null;
 
+            state.finishedTime = null;
+            state.startedAt = Date.now();
+
             state.secretWord =
                 state.words[
                     Math.floor(Math.random() * state.words.length)
@@ -201,14 +167,7 @@ const gameSlice = createSlice({
         }
     },
     extraReducers: (builder) => {
-        // builder.addCase(initWords.fulfilled, (state, action) => {
-        //     state.words = action.payload;
 
-        //     state.secretWord =
-        //         action.payload[
-        //             Math.floor(Math.random() * action.payload.length)
-        //         ];
-        // });
 
         builder.addCase(initWords.fulfilled, (state, action) => {
             state.words = action.payload;
@@ -236,7 +195,8 @@ export const {
     removeLetter,
     submitGuess,
     setAnimationRow,
-    restartGame
+    restartGame,
+    clearError,
 } = gameSlice.actions;
 
 export default gameSlice.reducer;

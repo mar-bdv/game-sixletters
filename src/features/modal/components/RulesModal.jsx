@@ -43,7 +43,7 @@ export default function RulesModal() {
                             <p className={`${styles.letter_char} ${styles.letter_correct}`}>А</p>
                         </div>
 
-                        <p className={styles.modal_letter_text}>буква есть в слове и стоит на своём месте.</p>
+                        <p className={styles.modal_letter_text}>буква <strong>есть</strong> в слове и стоит на <strong>своём</strong> месте.</p>
                     </div>
 
                     <div className={styles.modal_letter}>
@@ -51,7 +51,7 @@ export default function RulesModal() {
                             <p className={`${styles.letter_char} ${styles.letter_present}`}>Б</p>
                         </div>
 
-                        <p className={styles.modal_letter_text}>буква есть в слове, но находится в другой позиции.</p>
+                        <p className={styles.modal_letter_text}>буква <strong>есть</strong> в слове, но находится в <strong>другой позиции.</strong></p>
                     </div>
 
                     <div className={styles.modal_letter}>
@@ -59,7 +59,7 @@ export default function RulesModal() {
                             <p className={`${styles.letter_char} ${styles.letter_absent}`}>В</p>
                         </div>
 
-                        <p className={styles.modal_letter_text}>такой буквы в загаданном слове нет.</p>
+                        <p className={styles.modal_letter_text}>такой буквы в загаданном слове <strong>нет.</strong></p>
                     </div>
 
                     <p className={styles.modal_letter_info}>Если ты угадаешь слово полностью, все буквы станут зелёными.</p>

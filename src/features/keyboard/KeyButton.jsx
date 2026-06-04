@@ -11,7 +11,17 @@ export default function KeyButton({ value, onClick }) {
 
     const getLabel = () => {
         if (value === "ENTER") return "Ввод";
-        if (value === "DEL") return "⌫";
+
+        if (value === "DEL")
+            return (
+                <img
+                    src="https://img.icons8.com/?size=100&id=37422&format=png&color=000000"
+                    alt="Delete"
+                    width={50}
+                    height={50}
+                />
+            );
+
         return value;
     };
 

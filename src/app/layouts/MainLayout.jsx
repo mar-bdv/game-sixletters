@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import StatsModal from "../../features/modal/components/StatsModal";
 import SettingsModal from "../../features/modal/components/SettingsModal";
 import GameResultModal from "../../features/modal/components/GameResultModal";
+import NotificationContainer from "../../features/modal/components/Notifications/NotificationContainer";
 
 export default function MainLayout() {
     const activeModal = useSelector(
@@ -35,6 +36,7 @@ export default function MainLayout() {
                 
                 <Header />
                 <hr className={styles.mainLayout_hr}></hr>
+                <NotificationContainer />
                 
             </div>
 

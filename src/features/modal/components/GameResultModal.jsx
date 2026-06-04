@@ -3,10 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import styles from "./gameresultmodal.module.scss"
 import { closeModal } from "../slices/modalSlice";
 import { restartGame } from "../../game/gameSlice";
-
+import Confetti from "react-confetti";
+import { useWindowSize } from "@uidotdev/usehooks";
 
 export default function GameResultModal() {
     const dispatch = useDispatch();
+    const { width, height } = useWindowSize();
 
     const resultType = useSelector(
         (state) => state.modal.resultType
@@ -20,6 +22,12 @@ export default function GameResultModal() {
         dispatch(restartGame());
         dispatch(closeModal());
     };
+    const finishedTime = useSelector(
+        (state) => state.game.finishedTime ?? 0
+    );
+
+    const minutes = Math.floor(finishedTime / 60);
+    const seconds = finishedTime % 60;
 
     const isWin = resultType === "win";
 
@@ -36,6 +44,13 @@ export default function GameResultModal() {
                 
                 {isWin && (
                     <>
+                        <Confetti
+                            width={width}
+                            height={height}
+                            numberOfPieces={250}
+                            spread={450}
+                            gravity={0.05}
+                        />
                         <div className={styles.result_heading_block}>
                             <h2 className={styles.result_congrats}>Поздравляю :)</h2>
 
@@ -56,7 +71,7 @@ export default function GameResultModal() {
 
                             <div className={styles.result_info_block}>
                                 <p className={styles.result_info_one}>Вы прошли игру за:</p>
-                                <p className={styles.result_info_result}>7 минут</p>
+                                <p className={styles.result_info_result}>{minutes} мин {seconds} сек</p>
                             </div>
 
                         </div>
