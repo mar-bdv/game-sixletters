@@ -25,7 +25,14 @@ const initialState = {
     startedAt: Date.now(),
     finishedTime: null,
 
+    requiredLetters: [],
+    hardMode: false,
+    hardModeTimeLimit: 120, 
+    swapEnterDel: false,
+
     animationRow: null,
+
+    gameModeAtFinish: null,
 };
 
 const gameSlice = createSlice({
@@ -34,6 +41,9 @@ const gameSlice = createSlice({
     initialState,
 
     reducers: {
+        toggleSwapEnterDel(state) {
+            state.swapEnterDel = !state.swapEnterDel;
+        },
         addLetter(state, action) {
             if (state.currentRow >= 5) return;
 
@@ -79,7 +89,17 @@ const gameSlice = createSlice({
 
             const secretUsed = Array(6).fill(false);
 
+            if (state.hardMode) {
+                const missingLetter = Object.keys(state.usedLetters)
+                    .filter(letter => state.usedLetters[letter] === "present" || state.usedLetters[letter] === "correct")
+                    .find(letter => !guess.includes(letter));
 
+                if (missingLetter) {
+                    state.error =
+                        "Пожалуйста, учитывайте ВСЕ найденные буквы! Выбран режим «Сложный мод»";
+                    return;
+                }
+            }
 
             if (!state.words.includes(guess)) {
                 state.error =
@@ -122,6 +142,23 @@ const gameSlice = createSlice({
                 }
             });
 
+            guessArr.forEach((letter, i) => {
+                if (
+                    row[i].status === "correct" ||
+                    row[i].status === "present"
+                ) {
+                    if (
+                        !state.requiredLetters.includes(letter)
+                    ) {
+                        state.requiredLetters.push(letter);
+                    }
+                }
+            });
+
+            
+        
+
+
 
             const isWin = guess === secret;
 
@@ -130,6 +167,10 @@ const gameSlice = createSlice({
 
                 state.finishedTime = Math.floor((Date.now() - state.startedAt) / 1000);
 
+                state.gameModeAtFinish = state.hardMode
+                    ? "hard"
+                    : "normal";
+                    
                 return;
             }
 
@@ -142,6 +183,8 @@ const gameSlice = createSlice({
 
             state.currentRow += 1;
             state.currentCol = 0;
+
+        
         
         },
 
@@ -160,15 +203,23 @@ const gameSlice = createSlice({
             state.finishedTime = null;
             state.startedAt = Date.now();
 
+            state.requiredLetters = [];
+
             state.secretWord =
                 state.words[
                     Math.floor(Math.random() * state.words.length)
                 ];
+        },
+
+        toggleHardMode(state) {
+            state.hardMode = !state.hardMode;
+        },
+
+        forceLose(state) {
+            state.gameStatus = "lose";
         }
     },
     extraReducers: (builder) => {
-
-
         builder.addCase(initWords.fulfilled, (state, action) => {
             state.words = action.payload;
 
@@ -197,6 +248,9 @@ export const {
     setAnimationRow,
     restartGame,
     clearError,
+    toggleHardMode,
+    forceLose,
+    toggleSwapEnterDel,
 } = gameSlice.actions;
 
 export default gameSlice.reducer;

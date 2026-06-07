@@ -18,6 +18,10 @@ export default function GameResultModal() {
         (state) => state.game.secretWord
     );
 
+    const gameModeAtFinish = useSelector(
+        state => state.game.gameModeAtFinish
+    );
+
     const handlePlayAgain = () => {
         dispatch(restartGame());
         dispatch(closeModal());
@@ -66,7 +70,7 @@ export default function GameResultModal() {
                         <div className={styles.result_info}>
                             <div className={styles.result_info_block}>
                                 <p className={styles.result_info_one}>Выбранный режим:</p>
-                                <p className={styles.result_info_result}>Нормальный</p>
+                                <p className={styles.result_info_result}>{gameModeAtFinish === "hard" ? "Сложный" : "Нормальный"}</p>
                             </div>
 
                             <div className={styles.result_info_block}>

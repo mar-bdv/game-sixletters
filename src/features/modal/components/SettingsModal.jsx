@@ -1,10 +1,21 @@
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styles from "./modals.module.scss";
 import { closeModal } from "../slices/modalSlice";
+import { toggleHardMode, toggleSwapEnterDel } from "../../game/gameSlice";
 
 export default function SettingsModal() {
     const dispatch = useDispatch();
+
+    const hardMode = useSelector(
+        state => state.game.hardMode
+    );
+
+    const swapEnterDel = useSelector(
+        state => state.game.swapEnterDel
+    );
+
+    console.log("swapEnterDel in keyboard:", swapEnterDel);
 
     return (
         <div className={styles.overlay}>
@@ -44,7 +55,14 @@ export default function SettingsModal() {
                     <div className={styles.settings_block}>
                         <p className={styles.settings_name}>Поменять местами кнопки “Ввод” и “Удалить”</p>
 
-                        <img width="44" height="44" src="https://img.icons8.com/ios/50/toggle-off.png" alt="toggle-off"/>
+                        <img
+                            onClick={() => dispatch(toggleSwapEnterDel())}
+                            className={styles.settings_btn}
+                            width="44" height="44" src={
+                                swapEnterDel
+                                        ? "https://img.icons8.com/ios-filled/50/toggle-on.png"
+                                        : "https://img.icons8.com/ios/50/toggle-off.png"
+                            } alt="toggle-off"/>
 
                         {/* <img width="44" height="44" src="https://img.icons8.com/ios-filled/50/toggle-on.png" alt="toggle-on"/> */}
                     </div>
@@ -63,7 +81,17 @@ export default function SettingsModal() {
 
                         </div>
 
-                        <img width="44" height="44" src="https://img.icons8.com/ios/50/toggle-off.png" alt="toggle-off"/>
+                            <img
+                                onClick={() => dispatch(toggleHardMode())}
+                                className={styles.settings_btn}
+                                width="44"
+                                height="44"
+                                src={
+                                    hardMode
+                                        ? "https://img.icons8.com/ios-filled/50/toggle-on.png"
+                                        : "https://img.icons8.com/ios/50/toggle-off.png"
+                                }
+                            />
 
                         {/* <img width="44" height="44" src="https://img.icons8.com/ios-filled/50/toggle-on.png" alt="toggle-on"/> */}
                     </div>

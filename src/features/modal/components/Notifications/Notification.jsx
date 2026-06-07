@@ -5,7 +5,7 @@ import styles from "./notification.module.scss"
 
 export default function Notification({
     id,
-    
+    text
 }) {
     const dispatch = useDispatch();
 
@@ -19,7 +19,7 @@ export default function Notification({
 
     return (
         <div className={styles.notification_block}>
-            <p className={styles.notification_text}>В словаре нет такого слова!<br/>Попробуйте другое, например "макияж"</p>
+            <p className={styles.notification_text}>{text}</p>
         </div>
     );
 }

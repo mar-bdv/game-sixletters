@@ -93,11 +93,11 @@ import { useSelector, useDispatch } from "react-redux";
 
 import Board from "../features/game/components/Board";
 
-import { addLetter, clearError, initWords, removeLetter, submitGuess } from "../features/game/gameSlice";
+import { addLetter, clearError, forceLose, initWords, removeLetter, submitGuess } from "../features/game/gameSlice";
 import KeyBoard from "../features/keyboard/Keyboard";
 
 import styles from "./homepage.module.scss";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { openResultModal } from "../features/modal/slices/modalSlice";
 import { addNotification } from "../features/modal/slices/notificationSlice";
 
@@ -146,6 +146,23 @@ const KEY_MAP = {
 
 function HomePage() {
     const dispatch = useDispatch();
+    const [timeLeft, setTimeLeft] = useState(120);
+    const gameStatus = useSelector(
+        (state) => state.game.gameStatus
+    );
+
+    const hardMode = useSelector(
+        state => state.game.hardMode
+    );
+
+    const startedAt = useSelector(
+        state => state.game.startedAt
+    );
+
+
+    const error = useSelector(
+        (state) => state.game.error
+    );
 
     const board = useSelector((state) => state.game.board);
 
@@ -159,13 +176,33 @@ function HomePage() {
         dispatch(initWords());
     }, [dispatch]);
 
-    const gameStatus = useSelector(
-        (state) => state.game.gameStatus
-    );
+    const minutes = Math.floor(timeLeft / 60);
+    const seconds = timeLeft % 60;
 
-    const error = useSelector(
-        (state) => state.game.error
-    );
+    useEffect(() => {
+        if (!hardMode) return;
+
+        const interval = setInterval(() => {
+            const passed = Math.floor((Date.now() - startedAt) / 1000);
+            const left = 120 - passed;
+
+            if (left <= 0) {
+                setTimeLeft(0);
+
+                if (gameStatus === "playing") {
+                    dispatch(forceLose());
+                }
+
+                return;
+            }
+
+            setTimeLeft(left);
+        }, 1000);
+
+        return () => clearInterval(interval);
+    }, [hardMode, startedAt, gameStatus, dispatch]);
+
+    
 
 
     useEffect(() => {
@@ -204,6 +241,7 @@ function HomePage() {
     };
 
 
+
     useEffect(() => {
         const handleKeyDown = (event) => {
             const code = event.code;
@@ -239,6 +277,17 @@ function HomePage() {
             // ref={pageRef}
             // tabIndex={0}
         >
+            {hardMode && (
+                <p
+                    className={
+                        timeLeft <= 15
+                            ? styles.timerDanger
+                            : styles.timer
+                    }
+                >
+                    До конца игры: {minutes}:{seconds < 10 ? "0" : ""}{seconds}
+                </p>
+            )}
             <Board board={board} />
 
             <div className={styles.keyboard}>
