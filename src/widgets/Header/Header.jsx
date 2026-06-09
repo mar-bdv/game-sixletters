@@ -1,25 +1,79 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styles from './header.module.scss'
 import { toggleModal } from '../../features/modal/slices/modalSlice';
+import { restartGame } from '../../features/game/gameSlice';
 
 function Header() {
     const dispatch = useDispatch();
 
+    const hintAvailable = useSelector(
+        state => state.game.hintAvailable
+    );
+
+    const hintLetter = useSelector(
+        state => state.game.hintLetter
+    );
+
+    const gameStatus = useSelector(
+        (state) => state.game.gameStatus
+    );
+
+    const handleRestart = () => {
+        const confirmed = window.confirm(
+            "Начать новую игру? Текущий прогресс будет потерян."
+        );
+
+        if (confirmed) {
+            dispatch(restartGame());
+        }
+    };
+
     return (
         <div className={styles.header}>
             
+            <div className={styles.header_icons}>
+                <button className={styles.header_btn} onClick={() => dispatch(toggleModal("rules"))}>
+                    <img 
+                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAADoElEQVR4nO2Zy0tVURTGf5WvsgZ2nQQ1KYuofNJt0AudRw8oGwXRuD+gBpUSTUq7DSp0EFSjJuYrEQqaRNAkkzS1QbMaWGpkRektb2z4DmxEz737PK4N7gcbvJ611t77nG+tvdbaUEAB/wVKgSagFegGxoAZYB6Y09/v9MzINEpnxdEAdAJfgYzjMDodQP1KLLwOGFy0oCGgDTgJ1AAVQLFGhf5nnrUDbyy9BWBAz2PHWiAF/NHks8B1YGcAW0bnhmwYW2ltroyYsB0Y1mTzetvmzYbFRuCmNpDR16kiYuwDvmgC46C1MdFyXHN8BpJRLv67DJsoUk58WA/0WPRMRkEb783fB9YQP4qAB9aX2BbGYYetN5+Pxdub6LWiWyDHTlmcj5M2fnSa0BpMwHB2qLRGbQDamajyEvgEfAReABeBSkdb9dY6ql0UBwPu/ALw1zqkfi76PQ0cCciEfpf0wCh8c4zzl6T3C7gGbLF86QDwVM9NbrTf8ZyY1YltmJEVnZrInJK5YhPwW5OcWkZmNfBEtl/hhjbp3c0mWGolZi7pwXnpPMsit8ei02YH+7ssCpb4CTZZocsFV6V3OovcKn2pjGjlgrfSO+wn1BrQeQ1Pj+ZwVpSLZmaOHQGd+YqfkHeMm7Q3DpyV/Uml2S5olu5jP6ExCTnFXAceT8u+CbeuqJXuqJ/QlIQMJaLEMSs49AZMSyqlb3KzZTEnIV9Pd0CxTmWP96kA1LEjZEZBIG8buCd7U/oKYVCaywY8CiUIDy8k/4iocK/MhUJROnGHbN0mGtTm4sTdEYbRAdk6RzRolr2uOA6ypdAvW8eJBinZu+wn1Gh1BsLCZLUtwDqiwYjWdiibp88ESObixm4rmhXn6nwu6XTcaM81nUYhb0FFRNQnchAk1NZZcClvvQhiTtEgMGnzI6UPZwiHW1pLn4tSjVVM51TGLfHWvMLlOeECQVqtTFMMBeLduFocrjB8/QCcIBg2AO+1BtNAdkaZ1QbvUbMpXygSZczcr8NchlSpvZdRuy8fmygCHlqFz9awBpNWD783IJ1caNNnNXf3RmU4aX2JiZiuhRoszk9GuXibTkPWbUoqorQ7oVCZtjgfmjZ+jt1mTTar36beDZIetFt3D/OKNnm5vaxWtumVihn1bVJKe+t0ipdoJPS/ZsmMLLrk69OG8o46xXuv2+AyTGJ2J6brKmeUKM1tUcExqgXOaUzprXepMXUwRHFfQAFEiH99ijpJqkxAQgAAAABJRU5ErkJggg==" 
+                    alt="rules"
+                    className={styles.header_icon}></img>
+                </button>
+                
+                {(hintAvailable || hintLetter) && gameStatus === "playing" && (
+                    <button
+                        className={styles.header_btn}
+                        onClick={() => dispatch(toggleModal("hint"))}
+                    >
+                        <img
+                            
+                            src="https://img.icons8.ru/windows/32/idea--v1.png"
+                            alt="hint"
+                            className={styles.header_icon}
+                        />
+                    </button>
+                )}
 
-            <button className={styles.header_btn} onClick={() => dispatch(toggleModal("rules"))}>
-                <img 
-                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAADoElEQVR4nO2Zy0tVURTGf5WvsgZ2nQQ1KYuofNJt0AudRw8oGwXRuD+gBpUSTUq7DSp0EFSjJuYrEQqaRNAkkzS1QbMaWGpkRektb2z4DmxEz737PK4N7gcbvJ611t77nG+tvdbaUEAB/wVKgSagFegGxoAZYB6Y09/v9MzINEpnxdEAdAJfgYzjMDodQP1KLLwOGFy0oCGgDTgJ1AAVQLFGhf5nnrUDbyy9BWBAz2PHWiAF/NHks8B1YGcAW0bnhmwYW2ltroyYsB0Y1mTzetvmzYbFRuCmNpDR16kiYuwDvmgC46C1MdFyXHN8BpJRLv67DJsoUk58WA/0WPRMRkEb783fB9YQP4qAB9aX2BbGYYetN5+Pxdub6LWiWyDHTlmcj5M2fnSa0BpMwHB2qLRGbQDamajyEvgEfAReABeBSkdb9dY6ql0UBwPu/ALw1zqkfi76PQ0cCciEfpf0wCh8c4zzl6T3C7gGbLF86QDwVM9NbrTf8ZyY1YltmJEVnZrInJK5YhPwW5OcWkZmNfBEtl/hhjbp3c0mWGolZi7pwXnpPMsit8ei02YH+7ssCpb4CTZZocsFV6V3OovcKn2pjGjlgrfSO+wn1BrQeQ1Pj+ZwVpSLZmaOHQGd+YqfkHeMm7Q3DpyV/Uml2S5olu5jP6ExCTnFXAceT8u+CbeuqJXuqJ/QlIQMJaLEMSs49AZMSyqlb3KzZTEnIV9Pd0CxTmWP96kA1LEjZEZBIG8buCd7U/oKYVCaywY8CiUIDy8k/4iocK/MhUJROnGHbN0mGtTm4sTdEYbRAdk6RzRolr2uOA6ypdAvW8eJBinZu+wn1Gh1BsLCZLUtwDqiwYjWdiibp88ESObixm4rmhXn6nwu6XTcaM81nUYhb0FFRNQnchAk1NZZcClvvQhiTtEgMGnzI6UPZwiHW1pLn4tSjVVM51TGLfHWvMLlOeECQVqtTFMMBeLduFocrjB8/QCcIBg2AO+1BtNAdkaZ1QbvUbMpXygSZczcr8NchlSpvZdRuy8fmygCHlqFz9awBpNWD783IJ1caNNnNXf3RmU4aX2JiZiuhRoszk9GuXibTkPWbUoqorQ7oVCZtjgfmjZ+jt1mTTar36beDZIetFt3D/OKNnm5vaxWtumVihn1bVJKe+t0ipdoJPS/ZsmMLLrk69OG8o46xXuv2+AyTGJ2J6brKmeUKM1tUcExqgXOaUzprXepMXUwRHFfQAFEiH99ijpJqkxAQgAAAABJRU5ErkJggg==" 
-                alt="rules"
-                className={styles.header_icon}></img>
-            </button>
-        
+            </div>
+
 
             <h1 className={styles.header_heading}>Угадай слово</h1>
+
+        
         
             <div className={styles.header_icons}>
+                <button
+                    className={styles.header_btn}
+                    onClick={() => dispatch(handleRestart)}
+                >
+                    <img
+                        width="32"
+                        height="32"
+                        src="https://img.icons8.ru/sf-regular/48/repeat.png"
+                        alt="restart"
+                        className={styles.header_icon}
+                    />
+                </button>
+                
                 <button
                     className={styles.header_btn}
                     onClick={() => dispatch(toggleModal("stats"))}

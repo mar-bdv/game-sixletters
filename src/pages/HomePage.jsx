@@ -159,6 +159,10 @@ function HomePage() {
         state => state.game.startedAt
     );
 
+    const hintAvailable = useSelector(
+        state => state.game.hintAvailable
+    );
+
 
     const error = useSelector(
         (state) => state.game.error
@@ -175,6 +179,14 @@ function HomePage() {
     useEffect(() => {
         dispatch(initWords());
     }, [dispatch]);
+
+    useEffect(() => {
+        if (!hintAvailable) return;
+
+        dispatch(
+            addNotification("Вам доступна подсказка")
+        );
+    }, [hintAvailable, dispatch]);
 
     const minutes = Math.floor(timeLeft / 60);
     const seconds = timeLeft % 60;

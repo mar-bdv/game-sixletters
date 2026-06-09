@@ -33,6 +33,10 @@ const initialState = {
     animationRow: null,
 
     gameModeAtFinish: null,
+
+    hintAvailable: false,
+    hintPosition: null,
+    hintLetter: null,
 };
 
 const gameSlice = createSlice({
@@ -155,11 +159,6 @@ const gameSlice = createSlice({
                 }
             });
 
-            
-        
-
-
-
             const isWin = guess === secret;
 
             if (isWin) {
@@ -179,6 +178,15 @@ const gameSlice = createSlice({
             if (state.currentRow === 4) {
                 state.gameStatus = "lose";
                 return;
+            }
+
+            if (
+                !state.hardMode &&
+                state.currentRow === 2 &&
+                !state.hintAvailable &&
+                !state.hintLetter
+            ) {
+                state.hintAvailable = true;
             }
 
             state.currentRow += 1;
@@ -203,6 +211,11 @@ const gameSlice = createSlice({
             state.finishedTime = null;
             state.startedAt = Date.now();
 
+            state.hintAvailable = false;
+            state.hintPosition = null;
+            state.hintLetter = null;
+
+
             state.requiredLetters = [];
 
             state.secretWord =
@@ -217,7 +230,15 @@ const gameSlice = createSlice({
 
         forceLose(state) {
             state.gameStatus = "lose";
-        }
+        },
+
+        selectHint(state, action) {
+            const position = action.payload;
+
+            state.hintPosition = position;
+            state.hintLetter = state.secretWord[position - 1];
+            state.hintAvailable = false;
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(initWords.fulfilled, (state, action) => {
@@ -251,6 +272,7 @@ export const {
     toggleHardMode,
     forceLose,
     toggleSwapEnterDel,
+    selectHint,
 } = gameSlice.actions;
 
 export default gameSlice.reducer;

@@ -9,6 +9,7 @@ import StatsModal from "../../features/modal/components/StatsModal";
 import SettingsModal from "../../features/modal/components/SettingsModal";
 import GameResultModal from "../../features/modal/components/GameResultModal";
 import NotificationContainer from "../../features/modal/components/Notifications/NotificationContainer";
+import HintModal from "../../features/modal/components/HintModal/HintModal";
 
 export default function MainLayout() {
     const activeModal = useSelector(
@@ -49,6 +50,7 @@ export default function MainLayout() {
             {activeModal === "rules" && <RulesModal />}
             {activeModal === "stats" && <StatsModal />}
             {activeModal === "settings" && <SettingsModal />}
+            {activeModal === "hint" && <HintModal />}
             {activeModal === "result" && <GameResultModal />}
         </>
     );

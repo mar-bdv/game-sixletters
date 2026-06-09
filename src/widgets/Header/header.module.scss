@@ -21,6 +21,11 @@ body {
     width: 100%;
 }
 
+.header_icons {
+    display: flex;
+    align-items: flex-start;
+}
+
 .header_icon {
     width: 27px;
 }
