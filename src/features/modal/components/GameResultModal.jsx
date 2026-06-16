@@ -22,6 +22,10 @@ export default function GameResultModal() {
         state => state.game.gameModeAtFinish
     );
 
+    const confettiEnabled = useSelector(
+        state => state.game.confettiEnabled
+    );
+
     const handlePlayAgain = () => {
         dispatch(restartGame());
         dispatch(closeModal());
@@ -48,13 +52,15 @@ export default function GameResultModal() {
                 
                 {isWin && (
                     <>
-                        <Confetti
-                            width={width}
-                            height={height}
-                            numberOfPieces={250}
-                            spread={450}
-                            gravity={0.05}
-                        />
+                        {confettiEnabled && (
+                            <Confetti
+                                width={width}
+                                height={height}
+                                numberOfPieces={250}
+                                spread={450}
+                                gravity={0.05}
+                            />
+                        )}
                         <div className={styles.result_heading_block}>
                             <h2 className={styles.result_congrats}>Поздравляю :)</h2>
 

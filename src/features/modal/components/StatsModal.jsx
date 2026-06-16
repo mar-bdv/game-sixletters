@@ -1,11 +1,29 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { closeModal } from "../slices/modalSlice";
 
 import styles from "./modals.module.scss";
+import { resetStats } from "../slices/statsSlice";
 
 export default function StatsModal() {
     const dispatch = useDispatch();
+    
+    const {
+        totalGames,
+        totalWins,
+        hardGames,
+        hardWins,
+        streak,
+    } = useSelector(
+        state => state.stats
+    );
+
+    const winRate =
+        totalGames === 0
+            ? 0
+            : Math.round(
+                (totalWins / totalGames) * 100
+            );
 
     return (
         <div className={styles.overlay}>
@@ -24,12 +42,12 @@ export default function StatsModal() {
                 <div className={styles.stats_container}>
                     <div className={styles.stats_row}>
                         <div className={styles.stats_oneblock}>
-                            <p className={styles.stats_oneblock_number}>0</p>
+                            <p className={styles.stats_oneblock_number}>{totalGames}</p>
                             <p className={styles.stats_oneblock_descr}>игр сыграно в общем</p>
                         </div>
 
                         <div className={styles.stats_oneblock}>
-                            <p className={styles.stats_oneblock_number}>0</p>
+                            <p className={styles.stats_oneblock_number}>{totalWins}</p>
                             <p className={styles.stats_oneblock_descr}>побед в общем</p>
                         </div>
                     </div>
@@ -38,12 +56,12 @@ export default function StatsModal() {
 
                     <div className={styles.stats_row}>
                         <div className={styles.stats_oneblock}>
-                            <p className={styles.stats_oneblock_number}>0%</p>
+                            <p className={styles.stats_oneblock_number}>{winRate}%</p>
                             <p className={styles.stats_oneblock_descr}>процент выигрышей</p>
                         </div>
 
                         <div className={styles.stats_oneblock}>
-                            <p className={styles.stats_oneblock_number}>0</p>
+                            <p className={styles.stats_oneblock_number}>{streak}</p>
                             <p className={styles.stats_oneblock_descr}>дней подряд вы играли в эту игру</p>
                         </div>
                     </div>
@@ -52,18 +70,21 @@ export default function StatsModal() {
 
                     <div className={styles.stats_row}>
                         <div className={styles.stats_oneblock}>
-                            <p className={styles.stats_oneblock_number}>0</p>
+                            <p className={styles.stats_oneblock_number}>{hardGames}</p>
                             <p className={styles.stats_oneblock_descr}>игр сыграно в сложном моде</p>
                         </div>
 
                         <div className={styles.stats_oneblock}>
-                            <p className={styles.stats_oneblock_number}>0</p>
+                            <p className={styles.stats_oneblock_number}>{hardWins}</p>
                             <p className={styles.stats_oneblock_descr}>побед в сложном моде</p>
                         </div>
                     </div>
                 </div>
 
-                <div className={styles.stats_reset_block}>
+                <div 
+                    className={styles.stats_reset_block}
+                    onClick={() => dispatch(resetStats())}
+                >
                     <button className={styles.stats_reset}>Сбросить статистику</button>
                 </div>
 

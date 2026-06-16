@@ -2,7 +2,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./modals.module.scss";
 import { closeModal } from "../slices/modalSlice";
-import { toggleHardMode, toggleSwapEnterDel } from "../../game/gameSlice";
+import { toggleConfetti, toggleHardMode, toggleSwapEnterDel } from "../../game/gameSlice";
 
 export default function SettingsModal() {
     const dispatch = useDispatch();
@@ -13,6 +13,10 @@ export default function SettingsModal() {
 
     const swapEnterDel = useSelector(
         state => state.game.swapEnterDel
+    );
+
+    const confettiEnabled = useSelector(
+        state => state.game.confettiEnabled
     );
 
     console.log("swapEnterDel in keyboard:", swapEnterDel);
@@ -35,7 +39,7 @@ export default function SettingsModal() {
                     <div className={styles.settings_block}>
                         <p className={styles.settings_name}>Темная тема</p>
 
-                        <img width="44" height="44" src="https://img.icons8.com/ios/50/toggle-off.png" alt="toggle-off"/>
+                        <img width="44" height="44" src="https://img.icons8.com/ios/50/toggle-off.png" alt="toggle"/>
 
                         {/* <img width="44" height="44" src="https://img.icons8.com/ios-filled/50/toggle-on.png" alt="toggle-on"/> */}
                     </div>
@@ -45,7 +49,14 @@ export default function SettingsModal() {
                     <div className={styles.settings_block}>
                         <p className={styles.settings_name}>Анимация конфетти в случае победы</p>
 
-                        <img width="44" height="44" src="https://img.icons8.com/ios/50/toggle-off.png" alt="toggle-off"/>
+                        <img width="44" height="44" 
+                        className={styles.settings_btn}
+                        onClick={() => dispatch(toggleConfetti())}
+                        src={
+                            confettiEnabled
+                                ? "https://img.icons8.com/ios-filled/50/toggle-on.png"
+                                : "https://img.icons8.com/ios/50/toggle-off.png"
+                        } alt="toggle"/>
 
                         {/* <img width="44" height="44" src="https://img.icons8.com/ios-filled/50/toggle-on.png" alt="toggle-on"/> */}
                     </div>

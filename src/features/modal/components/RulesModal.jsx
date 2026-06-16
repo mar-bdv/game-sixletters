@@ -75,7 +75,7 @@ export default function RulesModal() {
 
                     <div className={styles.questions_one}>
                         <p className={styles.question_first}><strong>Какие слова используются?</strong></p>
-                        <p className={styles.question_answer}>Обычно это существительные в единственном числе.</p>
+                        <p className={styles.question_answer}>Загаданное слово всегда состоит из фиксированного количества букв и является реальным словом.</p>
                     </div>
 
                     <div className={styles.questions_one}>

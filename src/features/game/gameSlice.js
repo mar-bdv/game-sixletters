@@ -23,6 +23,7 @@ const initialState = {
     usedLetters: {},
     error: null,
     startedAt: Date.now(),
+    hardModeStartedAt: null,
     finishedTime: null,
 
     requiredLetters: [],
@@ -37,6 +38,8 @@ const initialState = {
     hintAvailable: false,
     hintPosition: null,
     hintLetter: null,
+
+    confettiEnabled: true,
 };
 
 const gameSlice = createSlice({
@@ -210,6 +213,7 @@ const gameSlice = createSlice({
 
             state.finishedTime = null;
             state.startedAt = Date.now();
+            state.hardModeStartedAt = null;
 
             state.hintAvailable = false;
             state.hintPosition = null;
@@ -226,6 +230,12 @@ const gameSlice = createSlice({
 
         toggleHardMode(state) {
             state.hardMode = !state.hardMode;
+
+            if (state.hardMode) {
+                state.hardModeStartedAt = Date.now();
+            } else {
+                state.hardModeStartedAt = null;
+            }
         },
 
         forceLose(state) {
@@ -238,6 +248,10 @@ const gameSlice = createSlice({
             state.hintPosition = position;
             state.hintLetter = state.secretWord[position - 1];
             state.hintAvailable = false;
+        },
+
+        toggleConfetti(state) {
+            state.confettiEnabled = !state.confettiEnabled;
         },
     },
     extraReducers: (builder) => {
@@ -273,6 +287,7 @@ export const {
     forceLose,
     toggleSwapEnterDel,
     selectHint,
+    toggleConfetti,
 } = gameSlice.actions;
 
 export default gameSlice.reducer;
