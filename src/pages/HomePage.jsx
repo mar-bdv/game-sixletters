@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import Board from "../features/game/components/Board";
 
-import { addLetter, clearError, forceLose, initWords, removeLetter, submitGuess } from "../features/game/gameSlice";
+import { addLetter, clearError, forceLose, initWords, removeLetter, restartGame, submitGuess } from "../features/game/gameSlice";
 import KeyBoard from "../features/keyboard/Keyboard";
 
 import styles from "./homepage.module.scss";
@@ -65,9 +65,9 @@ function HomePage() {
         state => state.game.hardMode
     );
 
-    // const startedAt = useSelector(
-    //     state => state.game.startedAt
-    // );
+    const resultClosed = useSelector(state => state.modal.resultClosed);
+    const resultType = useSelector(state => state.modal.resultType);
+
 
     const hintAvailable = useSelector(
         state => state.game.hintAvailable
@@ -105,31 +105,9 @@ function HomePage() {
     const minutes = Math.floor(timeLeft / 60);
     const seconds = timeLeft % 60;
 
-    // useEffect(() => {
-    //     if (!hardMode) return;
-
-    //     const interval = setInterval(() => {
-    //         const passed = Math.floor((Date.now() - startedAt) / 1000);
-    //         const left = 120 - passed;
-
-    //         if (left <= 0) {
-    //             setTimeLeft(0);
-
-    //             if (gameStatus === "playing") {
-    //                 dispatch(forceLose());
-    //             }
-
-    //             return;
-    //         }
-
-    //         setTimeLeft(left);
-    //     }, 1000);
-
-    //     return () => clearInterval(interval);
-    // }, [hardMode, startedAt, gameStatus, dispatch]);
 
     useEffect(() => {
-        if (!hardMode || !hardModeStartedAt) return;
+        if (!hardMode || !hardModeStartedAt || gameStatus !== "playing") return;
 
         const interval = setInterval(() => {
             const passed = Math.floor(
@@ -255,6 +233,22 @@ function HomePage() {
             // ref={pageRef}
             // tabIndex={0}
         >
+            {gameStatus !== "playing" && resultClosed && (
+                <div className={styles.endScreen}>
+                    <h2 className={styles.endScreen_text}>
+                        {resultType === "win"
+                            ? "Вы выиграли!"
+                            : "Вы проиграли!"}
+                    </h2>
+
+                    <button
+                        onClick={() => dispatch(restartGame())}
+                        className={styles.endScreen_btn}
+                    >
+                        Начать заново
+                    </button>
+                </div>
+            )}
             {hardMode && (
                 <p
                     className={

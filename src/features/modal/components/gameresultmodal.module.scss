@@ -16,8 +16,12 @@
 
 .modal {
     background: white;
-    padding: 24px;
+    padding: 35px;
     border-radius: 12px;
+}
+
+.modalWrapper {
+    position: relative;
 }
 
 
@@ -101,4 +105,14 @@
 
 .result_info_result {
     margin: 10px;
+}
+
+.close {
+    background-color: transparent;
+    border: none;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    font-size: 25px;
+    cursor: pointer;
 }

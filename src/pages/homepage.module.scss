@@ -5,5 +5,28 @@
 .timerDanger {
     color: #FF0000;
     text-align: center;
+}
 
+// endScreen
+// endScreen_text
+// endScreen_btn
+
+.endScreen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.endScreen_text {
+    font-size: 18px;
+}
+
+.endScreen_btn {
+    border-radius: 10px;
+    border: none;
+    background-color: #CAB450;
+    padding: 10px 20px;
+    font-size: 15px;
+    cursor: pointer;
+    font-family: "Open Sans", sans-serif;
 }

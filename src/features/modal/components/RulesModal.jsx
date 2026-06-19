@@ -73,15 +73,21 @@ export default function RulesModal() {
                         <p><strong>Что важно знать?</strong></p>
                     </div>
 
+                    
+                    <div className={styles.questions_one}>
+                        <p className={styles.question_first}><strong>Как работают подсказки с количеством букв?</strong></p>
+                        <p className={styles.question_answer}><i>Данную функцию можно включить в настройках.</i></p>
+                        <p className={styles.question_answer}>
+                            Если в слове есть повторяющиеся буквы и вы нашли не все из них, 
+                            над буквой появится число, показывающее, сколько таких букв ещё осталось найти.
+                        </p>
+                    </div>
+
                     <div className={styles.questions_one}>
                         <p className={styles.question_first}><strong>Какие слова используются?</strong></p>
                         <p className={styles.question_answer}>Загаданное слово всегда состоит из фиксированного количества букв и является реальным словом.</p>
                     </div>
 
-                    <div className={styles.questions_one}>
-                        <p className={styles.question_first}><strong>Могут ли повторяться буквы?</strong></p>
-                        <p className={styles.question_answer}>Да, в загаданном слове могут встречаться одинаковые буквы.</p>
-                    </div>
 
                 </div>
 

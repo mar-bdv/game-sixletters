@@ -8,6 +8,7 @@ const createBoard = () =>
             letter: "",
             status: "empty",
             animate: false,
+            duplicateHint: null,
         }))
     );
 
@@ -40,6 +41,7 @@ const initialState = {
     hintLetter: null,
 
     confettiEnabled: true,
+    duplicateHintsEnabled: false,
 };
 
 const gameSlice = createSlice({
@@ -82,11 +84,19 @@ const gameSlice = createSlice({
         },
 
         submitGuess(state) {
-            
+            const secretLetterCount = {};
+            const guessLetterCount = {};
+
             if (state.currentCol < 6) return;
             if (state.gameStatus !== "playing") return;
 
             const row = state.board[state.currentRow];
+
+                        
+            row.forEach(cell => {
+                cell.duplicateHint = null;
+            });
+
 
             const guess = row.map((c) => c.letter).join("");
             const secret = state.secretWord;
@@ -161,6 +171,35 @@ const gameSlice = createSlice({
                     }
                 }
             });
+
+            
+            // считаем буквы секретного слова
+            secretArr.forEach(letter => {
+                secretLetterCount[letter] =
+                    (secretLetterCount[letter] || 0) + 1;
+            });
+
+            // считаем буквы введенного слова
+            guessArr.forEach(letter => {
+                guessLetterCount[letter] =
+                    (guessLetterCount[letter] || 0) + 1;
+            });
+
+
+            if (state.duplicateHintsEnabled) {
+                guessArr.forEach((letter, i) => {
+                    const secretCount = secretLetterCount[letter] || 0;
+                    const guessCount = guessLetterCount[letter] || 0;
+                    if (
+                        secretCount >= 2 &&
+                        guessCount < secretCount &&
+                        row[i].status !== "absent"
+                    ) {
+                        row[i].duplicateHint =
+                            secretCount - guessCount;
+                    }
+                });
+            }
 
             const isWin = guess === secret;
 
@@ -253,6 +292,10 @@ const gameSlice = createSlice({
         toggleConfetti(state) {
             state.confettiEnabled = !state.confettiEnabled;
         },
+        toggleDuplicateHints(state) {
+            state.duplicateHintsEnabled =
+                !state.duplicateHintsEnabled;
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(initWords.fulfilled, (state, action) => {
@@ -288,6 +331,7 @@ export const {
     toggleSwapEnterDel,
     selectHint,
     toggleConfetti,
+    toggleDuplicateHints,
 } = gameSlice.actions;
 
 export default gameSlice.reducer;

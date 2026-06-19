@@ -1,4 +1,6 @@
-
+body {
+    font-family: "Open Sans", sans-serif;
+}
 
 .board {
     display: flex;
@@ -28,6 +30,8 @@
     color: #302E2F;
     
     transform-style: preserve-3d;
+    font-family: "Open Sans", sans-serif;
+
 }
 .flip {
     animation: flip 0.6s ease forwards;
@@ -54,6 +58,7 @@
     background: #6aaa64;
     border-color: #6aaa64;
     color: white;
+    font-family: "Open Sans", sans-serif;
 
 }
 
@@ -61,6 +66,7 @@
     background: #c9b458;
     border-color: #c9b458;
     color: white;
+    font-family: "Open Sans", sans-serif;
 
 }
 
@@ -68,8 +74,23 @@
     background: #787C7F;
     border-color: #787C7F;
     color: white;
+    font-family: "Open Sans", sans-serif;
+
 }
 
 .filled {
     border-color: #878a8c;
+    
+}
+
+.tileWrapper {
+    position: relative;
+}
+
+.hint {
+    position: absolute;
+    top: 5px;
+    right: 8px;
+    font-size: 12px;
+    font-weight: bold;
 }

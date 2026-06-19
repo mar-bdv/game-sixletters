@@ -2,7 +2,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./modals.module.scss";
 import { closeModal } from "../slices/modalSlice";
-import { toggleConfetti, toggleHardMode, toggleSwapEnterDel } from "../../game/gameSlice";
+import { toggleConfetti, toggleDuplicateHints, toggleHardMode, toggleSwapEnterDel } from "../../game/gameSlice";
 
 export default function SettingsModal() {
     const dispatch = useDispatch();
@@ -19,7 +19,10 @@ export default function SettingsModal() {
         state => state.game.confettiEnabled
     );
 
-    console.log("swapEnterDel in keyboard:", swapEnterDel);
+    const duplicateHintsEnabled = useSelector(
+        state => state.game.duplicateHintsEnabled
+    );
+
 
     return (
         <div className={styles.overlay}>
@@ -58,7 +61,6 @@ export default function SettingsModal() {
                                 : "https://img.icons8.com/ios/50/toggle-off.png"
                         } alt="toggle"/>
 
-                        {/* <img width="44" height="44" src="https://img.icons8.com/ios-filled/50/toggle-on.png" alt="toggle-on"/> */}
                     </div>
 
                     <hr/>
@@ -73,9 +75,8 @@ export default function SettingsModal() {
                                 swapEnterDel
                                         ? "https://img.icons8.com/ios-filled/50/toggle-on.png"
                                         : "https://img.icons8.com/ios/50/toggle-off.png"
-                            } alt="toggle-off"/>
+                            } alt="toggle"/>
 
-                        {/* <img width="44" height="44" src="https://img.icons8.com/ios-filled/50/toggle-on.png" alt="toggle-on"/> */}
                     </div>
 
                     <hr/>
@@ -102,9 +103,9 @@ export default function SettingsModal() {
                                         ? "https://img.icons8.com/ios-filled/50/toggle-on.png"
                                         : "https://img.icons8.com/ios/50/toggle-off.png"
                                 }
+                                alt="toggle"
                             />
 
-                        {/* <img width="44" height="44" src="https://img.icons8.com/ios-filled/50/toggle-on.png" alt="toggle-on"/> */}
                     </div>
 
                     <hr/>
@@ -114,13 +115,29 @@ export default function SettingsModal() {
                             <p className={styles.settings_name}>Подсказки с количеством букв</p>
 
                             <ul className={styles.settings_descr}>
-                                <li className={styles.settings_descr_one}>Если буква встречается чаще 1 раза в слове, высветится подсказка.</li>
+                                <li className={styles.settings_descr_one}>
+                                    Если в слове есть одинаковые буквы, и вы нашли не все,
+                                    <br/> над буквой появится число сколько таких букв ещё
+                                    <br/> осталось найти.
+
+                                </li>
                             </ul>
                         </div>
 
-                        <img width="44" height="44" src="https://img.icons8.com/ios/50/toggle-off.png" alt="toggle-off"/>
-
-                        {/* <img width="44" height="44" src="https://img.icons8.com/ios-filled/50/toggle-on.png" alt="toggle-on"/> */}
+                        <img
+                            onClick={() =>
+                                dispatch(toggleDuplicateHints())
+                            }
+                            className={styles.settings_btn}
+                            width="44"
+                            height="44"
+                            src={
+                                duplicateHintsEnabled
+                                    ? "https://img.icons8.com/ios-filled/50/toggle-on.png"
+                                    : "https://img.icons8.com/ios/50/toggle-off.png"
+                            }
+                            alt="toggle"
+                        />
                     </div>
                     <hr/>
                 </div>
