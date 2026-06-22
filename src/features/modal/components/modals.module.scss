@@ -143,6 +143,10 @@ body {
     justify-content: space-between;
 }
 
+.stats_row:last-child {
+    margin-bottom: 60px;
+}
+
 .stats_oneblock {
     width: 216px;
     margin: 10px;
@@ -174,8 +178,8 @@ body {
     font-size: 20px;
     padding: 10px 30px;
     border-radius: 10px;
-    margin-top: 60px;
     cursor: pointer;
+    font-family: "Open Sans", sans-serif;
 }
 
 .settings {

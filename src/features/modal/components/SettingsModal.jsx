@@ -40,16 +40,6 @@ export default function SettingsModal() {
 
                 <div className={styles.settings}>
                     <div className={styles.settings_block}>
-                        <p className={styles.settings_name}>Темная тема</p>
-
-                        <img width="44" height="44" src="https://img.icons8.com/ios/50/toggle-off.png" alt="toggle"/>
-
-                        {/* <img width="44" height="44" src="https://img.icons8.com/ios-filled/50/toggle-on.png" alt="toggle-on"/> */}
-                    </div>
-
-                    <hr/>
-
-                    <div className={styles.settings_block}>
                         <p className={styles.settings_name}>Анимация конфетти в случае победы</p>
 
                         <img width="44" height="44" 
@@ -88,7 +78,7 @@ export default function SettingsModal() {
                             <ul className={styles.settings_descr}>
                                 <li className={styles.settings_descr_one}>Игрок обязан учитывать все найденные буквы.</li>
                                 <li className={styles.settings_descr_one}>На игру дается 2 минуты.</li>
-                                <li className={styles.settings_descr_one}>Отключена возможность посмотреть подсказку.</li>
+                                <li className={styles.settings_descr_one}>Отключена возможность посмотреть дополнительную подсказку.</li>
                             </ul>
 
                         </div>

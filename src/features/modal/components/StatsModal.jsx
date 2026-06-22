@@ -18,6 +18,18 @@ export default function StatsModal() {
         state => state.stats
     );
 
+
+    const handleReset = () => {
+        const confirmed = window.confirm(
+            "Вы уверены, что хотите сбросить статистику? Это действие необратимо."
+        );
+
+        if (!confirmed) return;
+
+        dispatch(resetStats());
+        dispatch(closeModal());
+    };
+
     const winRate =
         totalGames === 0
             ? 0
@@ -83,7 +95,7 @@ export default function StatsModal() {
 
                 <div 
                     className={styles.stats_reset_block}
-                    onClick={() => dispatch(resetStats())}
+                    onClick={handleReset}
                 >
                     <button className={styles.stats_reset}>Сбросить статистику</button>
                 </div>

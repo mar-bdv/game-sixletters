@@ -94,6 +94,7 @@ function HomePage() {
         dispatch(initWords());
     }, [dispatch]);
 
+
     useEffect(() => {
         if (!hintAvailable) return;
 
@@ -228,11 +229,7 @@ function HomePage() {
         
 
     return (
-        <div 
-            
-            // ref={pageRef}
-            // tabIndex={0}
-        >
+        <div >
             {gameStatus !== "playing" && resultClosed && (
                 <div className={styles.endScreen}>
                     <h2 className={styles.endScreen_text}>

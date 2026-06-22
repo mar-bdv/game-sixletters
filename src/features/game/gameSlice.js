@@ -92,7 +92,6 @@ const gameSlice = createSlice({
 
             const row = state.board[state.currentRow];
 
-                        
             row.forEach(cell => {
                 cell.duplicateHint = null;
             });
@@ -120,12 +119,10 @@ const gameSlice = createSlice({
 
             if (!state.words.includes(guess)) {
                 state.error =
-                    "В словаре игры нет такого слова! Попробуйте другое, например «МАКИЯЖ»";
-
+                    "В словаре игры нет такого слова! Попробуйте другое, например «СОЛНЦЕ»";
                 return;
             }
 
-            // 1. GREEN (правильная позиция)
             guessArr.forEach((letter, i) => {
                 if (letter === secretArr[i]) {
                     row[i].status = "correct";
@@ -135,7 +132,6 @@ const gameSlice = createSlice({
                 }
             });
 
-            // 2. YELLOW / GRAY
             guessArr.forEach((letter, i) => {
                 if (row[i].status === "correct") return;
 
@@ -173,13 +169,11 @@ const gameSlice = createSlice({
             });
 
             
-            // считаем буквы секретного слова
             secretArr.forEach(letter => {
                 secretLetterCount[letter] =
                     (secretLetterCount[letter] || 0) + 1;
             });
 
-            // считаем буквы введенного слова
             guessArr.forEach(letter => {
                 guessLetterCount[letter] =
                     (guessLetterCount[letter] || 0) + 1;
@@ -205,6 +199,8 @@ const gameSlice = createSlice({
 
             if (isWin) {
                 state.gameStatus = "win";
+                state.hardModeStartedAt = null;
+
 
                 state.finishedTime = Math.floor((Date.now() - state.startedAt) / 1000);
 
@@ -219,6 +215,8 @@ const gameSlice = createSlice({
 
             if (state.currentRow === 4) {
                 state.gameStatus = "lose";
+                state.hardModeStartedAt = null;
+
                 return;
             }
 
@@ -252,7 +250,9 @@ const gameSlice = createSlice({
 
             state.finishedTime = null;
             state.startedAt = Date.now();
-            state.hardModeStartedAt = null;
+            state.hardModeStartedAt = state.hardMode
+                ? Date.now()
+                : null;
 
             state.hintAvailable = false;
             state.hintPosition = null;
@@ -279,6 +279,8 @@ const gameSlice = createSlice({
 
         forceLose(state) {
             state.gameStatus = "lose";
+            state.hardModeStartedAt = null;
+
         },
 
         selectHint(state, action) {
